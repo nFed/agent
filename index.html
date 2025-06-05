@@ -3,16 +3,15 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>צ'אט בוט מקצועי</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>צ'אט בוט מקצועי</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
-
     body {
       font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -24,7 +23,6 @@
       align-items: center;
       color: #333;
     }
-
     body::before {
       content: '';
       position: fixed;
@@ -32,18 +30,17 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: 
+      background:
         radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, rgba(120, 119, 198, 0.2) 0%, transparent 50%);
       z-index: -1;
     }
-
     .chat-container {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
       border-radius: 24px;
-      box-shadow: 
+      box-shadow:
         0 20px 60px rgba(0, 0, 0, 0.15),
         0 0 0 1px rgba(255, 255, 255, 0.2),
         inset 0 1px 0 rgba(255, 255, 255, 0.8);
@@ -57,7 +54,6 @@
       position: relative;
       animation: slideIn 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
     }
-
     @keyframes slideIn {
       from {
         opacity: 0;
@@ -68,7 +64,6 @@
         transform: translateY(0) scale(1);
       }
     }
-
     .chat-header {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -77,7 +72,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .chat-header::before {
       content: '';
       position: absolute;
@@ -88,12 +82,10 @@
       background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
       animation: shimmer 3s infinite;
     }
-
     @keyframes shimmer {
       0% { transform: translateX(-100%); }
       100% { transform: translateX(100%); }
     }
-
     .chat-title {
       font-size: 1.4em;
       font-weight: 700;
@@ -101,7 +93,6 @@
       position: relative;
       z-index: 1;
     }
-
     .chat-subtitle {
       font-size: 0.9em;
       opacity: 0.9;
@@ -109,7 +100,6 @@
       position: relative;
       z-index: 1;
     }
-
     .chat-box {
       flex-grow: 1;
       overflow-y: auto;
@@ -119,48 +109,25 @@
       gap: 16px;
       background: linear-gradient(to bottom, rgba(248, 250, 252, 0.5), rgba(241, 245, 249, 0.8));
     }
-
-    .chat-box::-webkit-scrollbar { 
-      width: 6px; 
-    }
-    .chat-box::-webkit-scrollbar-track { 
-      background: rgba(0,0,0,0.05); 
-      border-radius: 10px; 
-    }
-    .chat-box::-webkit-scrollbar-thumb { 
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      border-radius: 10px; 
-    }
-    .chat-box::-webkit-scrollbar-thumb:hover { 
-      background: linear-gradient(135deg, #5a6fd8, #6a42a0);
-    }
+    .chat-box::-webkit-scrollbar { width: 6px; }
+    .chat-box::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
+    .chat-box::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 10px; }
+    .chat-box::-webkit-scrollbar-thumb:hover { background: linear-gradient(135deg, #5a6fd8, #6a42a0); }
 
     .message-wrapper {
       display: flex;
       flex-direction: column;
       animation: messageSlide 0.6s cubic-bezier(0.23, 1, 0.32, 1);
     }
-
     @keyframes messageSlide {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    .message-wrapper.user { 
-      align-self: flex-start; 
-    }
-    .message-wrapper.bot { 
-      align-self: flex-end; 
-    }
+    .message-wrapper.user { align-self: flex-start; }
+    .message-wrapper.bot { align-self: flex-end; }
 
     .message {
-      padding: 16px 20px;
+      padding: 14px 18px; /* UPDATED from 16px 20px */
       border-radius: 20px;
       max-width: 85%;
       line-height: 1.6;
@@ -169,11 +136,7 @@
       font-weight: 400;
       transition: all 0.3s ease;
     }
-
-    .message:hover {
-      transform: translateY(-1px);
-    }
-
+    .message:hover { transform: translateY(-1px); }
     .message::before {
       content: "";
       position: absolute;
@@ -181,7 +144,6 @@
       width: 0;
       height: 0;
     }
-
     .message.user {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       color: white;
@@ -189,14 +151,12 @@
       border-bottom-right-radius: 8px;
       box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
     }
-
     .message.user::before {
       right: -12px;
       border-left: 12px solid #764ba2; /* This color might need adjustment if gradient has sharp change */
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
     }
-
     .message.bot {
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
@@ -206,24 +166,21 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.2);
     }
-
     .message.bot::before {
       left: -12px;
       border-right: 12px solid rgba(255, 255, 255, 0.9);
       border-top: 8px solid transparent;
       border-bottom: 8px solid transparent;
     }
-
     .message-header {
       display: flex;
       align-items: center;
       margin-bottom: 10px;
     }
-
     .avatar-icon {
       width: 32px;
       height: 32px;
-      margin-left: 12px; /* In RTL, this is space to the right of the icon, between icon and name */
+      margin-left: 12px;
       border-radius: 50%;
       flex-shrink: 0;
       display: flex;
@@ -232,73 +189,22 @@
       overflow: hidden;
       transition: transform 0.3s ease;
     }
+    .avatar-icon:hover { transform: scale(1.1); }
+    .message.user .avatar-icon { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px); }
+    .message.bot .avatar-icon { background: linear-gradient(135deg, #667eea, #764ba2); }
+    .avatar-icon svg { width: 18px; height: 18px; }
+    .message.user .avatar-icon svg { fill: #ffffff; }
+    .message.bot .avatar-icon svg { fill: #ffffff; }
+    .sender-name { font-weight: 600; font-size: 0.9em; }
+    .message.user .sender-name { color: rgba(255, 255, 255, 0.9); }
+    .message.bot .sender-name { color: #667eea; }
+    .message-body { font-size: 1em; line-height: 1.6; }
+    .message-footer { margin-top: 12px; font-size: 0.75em; font-weight: 500; }
+    .message.user .message-footer { text-align: left; color: rgba(255, 255, 255, 0.7); }
+    .message.bot .message-footer { text-align: right; color: #a0aec0; }
 
-    .avatar-icon:hover {
-      transform: scale(1.1);
-    }
-
-    .message.user .avatar-icon {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-    }
-
-    .message.bot .avatar-icon {
-      background: linear-gradient(135deg, #667eea, #764ba2);
-    }
-
-    .avatar-icon svg {
-      width: 18px;
-      height: 18px;
-    }
-
-    .message.user .avatar-icon svg { 
-      fill: #ffffff; 
-    }
-    .message.bot .avatar-icon svg { 
-      fill: #ffffff; 
-    }
-
-    .sender-name {
-      font-weight: 600;
-      font-size: 0.9em;
-    }
-
-    .message.user .sender-name { 
-      color: rgba(255, 255, 255, 0.9); 
-    }
-    .message.bot .sender-name { 
-      color: #667eea; 
-    }
-
-    .message-body { 
-      font-size: 1em; 
-      line-height: 1.6;
-    }
-
-    .message-footer {
-      margin-top: 12px;
-      font-size: 0.75em;
-      font-weight: 500;
-    }
-    .message.user .message-footer { 
-      text-align: left; /* In RTL, this means to the "end" side of the text direction */
-      color: rgba(255, 255, 255, 0.7); 
-    }
-    .message.bot .message-footer { 
-      text-align: right; /* In RTL, this means to the "start" side of the text direction */
-      color: #a0aec0; 
-    }
-    
-    #typing-indicator {
-      padding: 16px 20px;
-    }
-
-    .typing-dots {
-      display: flex;
-      align-items: center;
-      padding-top: 8px; /* Adjusted from your example, if it was meant to be inside message bot padding */
-    }
-
+    #typing-indicator { padding: 16px 20px; } /* Padding matches message for consistency */
+    .typing-dots { display: flex; align-items: center; padding-top: 8px; }
     .typing-dots span {
       display: inline-block;
       width: 8px;
@@ -308,20 +214,12 @@
       margin: 0 3px;
       animation: typing 1.4s infinite ease-in-out;
     }
-
     .typing-dots span:nth-child(1) { animation-delay: 0s; }
     .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
     .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
-
     @keyframes typing {
-      0%, 60%, 100% { 
-        transform: translateY(0) scale(1); 
-        opacity: 0.5; 
-      }
-      30% { 
-        transform: translateY(-8px) scale(1.2); 
-        opacity: 1; 
-      }
+      0%, 60%, 100% { transform: translateY(0) scale(1); opacity: 0.5; }
+      30% { transform: translateY(-8px) scale(1.2); opacity: 1; }
     }
 
     .input-area {
@@ -332,34 +230,27 @@
       backdrop-filter: blur(20px);
       border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
-
     .input-area input {
       flex: 1;
       padding: 16px 24px;
-      font-size: 1rem;
+      font-size: 1rem; /* Base font size for input */
       border: 2px solid rgba(102, 126, 234, 0.2);
       border-radius: 50px;
-      margin-left: 12px; /* In RTL, this is space to the right of the input, before the button */
+      margin-left: 12px;
       outline: none;
       background: rgba(255, 255, 255, 0.9);
       backdrop-filter: blur(10px);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       font-weight: 400;
     }
-
     .input-area input:focus {
       border-color: #667eea;
-      box-shadow: 
+      box-shadow:
         0 0 0 4px rgba(102, 126, 234, 0.1),
         0 4px 20px rgba(102, 126, 234, 0.2);
       transform: translateY(-1px);
     }
-
-    .input-area input::placeholder {
-      color: #a0aec0;
-      font-weight: 400;
-    }
-
+    .input-area input::placeholder { color: #a0aec0; font-weight: 400; }
     .input-area button {
       display: flex;
       align-items: center;
@@ -377,7 +268,6 @@
       position: relative;
       overflow: hidden;
     }
-
     .input-area button::before {
       content: '';
       position: absolute;
@@ -389,28 +279,14 @@
       transform: translateX(-100%);
       transition: transform 0.6s;
     }
-
     .input-area button:hover {
       transform: translateY(-2px) scale(1.05);
       box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
     }
+    .input-area button:hover::before { transform: translateX(100%); }
+    .input-area button:active { transform: translateY(0) scale(0.98); }
+    .input-area button svg { width: 24px; height: 24px; position: relative; z-index: 1; }
 
-    .input-area button:hover::before {
-      transform: translateX(100%);
-    }
-
-    .input-area button:active {
-      transform: translateY(0) scale(0.98);
-    }
-
-    .input-area button svg {
-      width: 24px;
-      height: 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* Floating particles animation */
     .chat-container::before {
       content: '';
       position: absolute;
@@ -418,117 +294,60 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-image: 
+      background-image:
         radial-gradient(circle at 25% 25%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
         radial-gradient(circle at 75% 75%, rgba(118, 75, 162, 0.1) 0%, transparent 50%);
       animation: float 6s ease-in-out infinite alternate;
       pointer-events: none;
       z-index: 0;
     }
-
     @keyframes float {
       0% { transform: translateY(0px) rotate(0deg); }
       100% { transform: translateY(-10px) rotate(1deg); }
     }
-
-    .chat-header, .chat-box, .input-area {
-      position: relative;
-      z-index: 1;
-    }
+    .chat-header, .chat-box, .input-area { position: relative; z-index: 1; }
 
     /* Mobile responsiveness */
     @media (max-width: 768px) {
-      body {
-        padding: 0;
-        align-items: stretch; /* This will make .chat-container stretch if it's a direct child and body is a flex container */
-      }
-      
-      .chat-container {
-        height: 100vh; /* This makes the chat container take full viewport height */
-        max-height: none; /* Override desktop max-height */
-        border-radius: 0;
-        box-shadow: none;
-      }
-      
-      .chat-header {
-        border-radius: 0; /* Remove border-radius for full-width header */
-        padding: 20px;
-      }
-      
+      body { padding: 0; align-items: stretch; }
+      .chat-container { height: 100vh; max-height: none; border-radius: 0; box-shadow: none; }
+      .chat-header { border-radius: 0; padding: 20px; }
       .message {
         max-width: 85%;
-        padding: 14px 18px;
+        padding: 12px 16px; /* UPDATED from 14px 18px */
       }
-      
-      .input-area {
-        padding: 16px;
-      }
-      
+      .input-area { padding: 16px; }
       .input-area input {
         padding: 14px 20px;
-        margin-left: 10px; /* In RTL, space to the right of input */
+        margin-left: 10px;
+        /* font-size is inherited as 1rem, which is >= 16px, so no zoom issue here */
       }
-      
-      .input-area button {
-        width: 52px;
-        height: 52px;
-      }
+      .input-area button { width: 52px; height: 52px; }
     }
 
     @media (max-width: 480px) {
-      .chat-header {
-        padding: 18px 16px;
-      }
-      
-      .chat-title {
-        font-size: 1.2em;
-      }
-      
-      .chat-subtitle {
-        font-size: 0.85em;
-      }
-      
-      .chat-box {
-        padding: 16px;
-      }
-      
+      .chat-header { padding: 18px 16px; }
+      .chat-title { font-size: 1.2em; }
+      .chat-subtitle { font-size: 0.85em; }
+      .chat-box { padding: 16px; }
       .message {
         max-width: 90%;
-        padding: 12px 16px;
-        font-size: 0.95em;
+        padding: 10px 14px; /* UPDATED from 12px 16px */
+        font-size: 0.95em; /* This is for message text, not input, so 0.95em is fine */
       }
-      
-      .avatar-icon {
-        width: 28px;
-        height: 28px;
-        margin-left: 10px; /* In RTL, space to the right of the icon */
-      }
-      
-      .input-area {
-        padding: 12px;
-      }
-      
+      .avatar-icon { width: 28px; height: 28px; margin-left: 10px; }
+      .input-area { padding: 12px; }
       .input-area input {
         padding: 12px 18px;
-        font-size: 0.95em;
-        margin-left: 8px; /* In RTL, space to the right of input */
+        font-size: 1em; /* UPDATED from 0.95em to prevent zoom on focus */
+        margin-left: 8px;
       }
-      
-      .input-area button {
-        width: 48px;
-        height: 48px;
-      }
-      
-      .input-area button svg {
-        width: 20px;
-        height: 20px;
-      }
+      .input-area button { width: 48px; height: 48px; }
+      .input-area button svg { width: 20px; height: 20px; }
     }
-
   </style>
 </head>
 <body>
-
   <div class="chat-container">
     <div class="chat-header">
       <div class="chat-title">צ'אט חכם AI</div>
@@ -563,7 +382,6 @@
       </button>
     </div>
   </div>
-
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const chat = document.getElementById('chat');
@@ -577,16 +395,15 @@ document.addEventListener("DOMContentLoaded", () => {
         localStorage.setItem('sid', sessionId);
     }
 
-    // SVG Icons
     const USER_AVATAR_SVG = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>`;
     const BOT_AVATAR_SVG = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C13.1 2 14 2.9 14 4C14 5.1 13.1 6 12 6C10.9 6 10 5.1 10 4C10 2.9 10.9 2 12 2ZM21 9V7L15 1H5C3.89 1 3 1.89 3 3V7H9V9H3V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V9H21ZM7 5H9V7H7V5Z"/></svg>`;
 
     function formatTime(date) {
         return date.toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit' });
     }
-    
+
     function showTypingIndicator() {
-        typingIndicatorWrapper.style.display = 'flex'; // Use flex as defined in message-wrapper
+        typingIndicatorWrapper.style.display = 'flex';
         chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
     }
 
@@ -607,9 +424,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const timestamp = formatTime(new Date());
         const avatarSvg = sender === 'user' ? USER_AVATAR_SVG : BOT_AVATAR_SVG;
 
-        // Note: In RTL, flex items in .message-header (avatar, name) will appear from right to left.
-        // So, avatar (first in HTML) will be on the right, then name to its left.
-        // The 'margin-left' on avatar-icon will correctly create space between avatar and name in RTL.
         messageDiv.innerHTML = `
             <div class="message-header">
                 <div class="avatar-icon">${avatarSvg}</div>
@@ -623,8 +437,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         messageWrapper.appendChild(messageDiv);
         chat.insertBefore(messageWrapper, typingIndicatorWrapper); 
-        
-        // Smooth scroll animation
+
         setTimeout(() => {
             chat.scrollTo({ top: chat.scrollHeight, behavior: 'smooth' });
         }, 100);
@@ -669,7 +482,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Event listeners
     sendBtn.onclick = sendMessage;
     input.addEventListener("keypress", e => {
         if (e.key === "Enter") {
@@ -678,22 +490,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Input animation effects
     input.addEventListener("focus", () => {
-        // Consider if this transform is desired on mobile, especially with on-screen keyboard
         // input.parentElement.style.transform = "translateY(-2px)"; 
     });
-    
     input.addEventListener("blur", () => {
         // input.parentElement.style.transform = "translateY(0)";
     });
 
-    // Welcome message with delay
     setTimeout(() => {
         appendMessage("bot", "היי! אני הבוט המשודרג שלך, עכשיו עם מראה חדש ומשופר. במה אוכל לעזור?");
     }, 1200);
 });
 </script>
-
 </body>
 </html>
