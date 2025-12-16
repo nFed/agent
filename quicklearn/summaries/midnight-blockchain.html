@@ -11,15 +11,17 @@
   <meta property="og:image" content="https://img.youtube.com/vi/TMGkYEVKuzI/maxresdefault.jpg">
 </head>
 <body>
-  <header>
+  <header id="header">
     <div class="container header-content">
       <a href="../index.html" class="logo">Quick<span>Learn</span></a>
     </div>
   </header>
 
   <main class="container">
-    <section class="video-section">
-      <div class="video-wrapper">
+    <section class="video-section" id="videoSection">
+      <div class="video-placeholder" id="videoPlaceholder"></div>
+      <div class="video-wrapper" id="videoWrapper">
+        <button class="pip-close" id="pipClose" aria-label="סגור תצוגה צפה">✕</button>
         <iframe 
           id="player"
           src="https://www.youtube.com/embed/TMGkYEVKuzI?enablejsapi=1" 
@@ -198,6 +200,19 @@
   </footer>
 
   <script>
+    // Elements
+    const header = document.getElementById('header');
+    const videoSection = document.getElementById('videoSection');
+    const videoWrapper = document.getElementById('videoWrapper');
+    const videoPlaceholder = document.getElementById('videoPlaceholder');
+    const pipClose = document.getElementById('pipClose');
+
+    // State
+    let isPipMode = false;
+    let pipDisabled = false;
+    let lastScrollY = 0;
+    let headerHidden = false;
+
     // YouTube IFrame API
     var player;
     
@@ -210,6 +225,12 @@
     }
 
     function seekTo(seconds) {
+      // If in PiP mode, scroll to video first
+      if (isPipMode) {
+        closePip();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      
       if (player && player.seekTo) {
         player.seekTo(seconds, true);
         player.playVideo();
@@ -221,6 +242,104 @@
     tag.src = "https://www.youtube.com/iframe_api";
     var firstScriptTag = document.getElementsByTagName('script')[0];
     firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    // PiP Functions
+    function enablePip() {
+      if (pipDisabled) return;
+      isPipMode = true;
+      videoWrapper.classList.add('pip');
+      videoPlaceholder.classList.add('active');
+    }
+
+    function closePip() {
+      isPipMode = false;
+      videoWrapper.classList.remove('pip');
+      videoPlaceholder.classList.remove('active');
+    }
+
+    function disablePipTemporarily() {
+      pipDisabled = true;
+      closePip();
+      // Re-enable after scrolling back to video
+    }
+
+    // Close PiP button
+    pipClose.addEventListener('click', function(e) {
+      e.stopPropagation();
+      disablePipTemporarily();
+    });
+
+    // Click on PiP video to expand
+    videoWrapper.addEventListener('click', function() {
+      if (isPipMode) {
+        closePip();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // Scroll handling
+    function handleScroll() {
+      const currentScrollY = window.scrollY;
+      const videoRect = videoSection.getBoundingClientRect();
+      const isMobile = window.innerWidth <= 768;
+      
+      // PiP mode: activate when video scrolls out of view
+      const videoOutOfView = videoRect.bottom < 100;
+      
+      if (videoOutOfView && !isPipMode && !pipDisabled) {
+        enablePip();
+      } else if (!videoOutOfView && isPipMode) {
+        closePip();
+      }
+      
+      // Re-enable PiP when scrolled back to video area
+      if (videoRect.top >= -50 && pipDisabled) {
+        pipDisabled = false;
+      }
+
+      // Smart header: hide on scroll down, show on scroll up (mobile only)
+      if (isMobile) {
+        const scrollDelta = currentScrollY - lastScrollY;
+        const scrolledPastThreshold = currentScrollY > 200;
+        
+        if (scrollDelta > 10 && scrolledPastThreshold && !headerHidden) {
+          header.classList.add('hidden');
+          headerHidden = true;
+        } else if (scrollDelta < -10 && headerHidden) {
+          header.classList.remove('hidden');
+          headerHidden = false;
+        }
+      } else {
+        // Always show header on desktop
+        if (headerHidden) {
+          header.classList.remove('hidden');
+          headerHidden = false;
+        }
+      }
+      
+      lastScrollY = currentScrollY;
+    }
+
+    // Throttled scroll listener
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // Handle resize
+    window.addEventListener('resize', function() {
+      // Reset header state on resize
+      if (window.innerWidth > 768) {
+        header.classList.remove('hidden');
+        headerHidden = false;
+      }
+    });
   </script>
 </body>
 </html>
